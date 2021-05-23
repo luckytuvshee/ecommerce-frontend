@@ -1,7 +1,12 @@
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {},
+  appBar: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    boxShadow: "0 .2rem .5rem rgba(0,0,0,.1) !important",
+  },
 
   grow: {
     flexGrow: 1,
@@ -9,10 +14,16 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     display: "none",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block",
     },
     borderRadius: 0,
+  },
+
+  appName: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 
   mobileListItem: {
@@ -20,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
     margin: 5,
     width: 240,
     "&:hover": {
-      backgroundColor: fade("#FFD4CC", 1),
+      backgroundColor: fade("#f0f4f8", 1),
     },
   },
 
   toolbar: {
-    [theme.breakpoints.down("xs")]: {
+    height: "20px !important",
+    minHeight: 14,
+    marginTop: 4,
+    marginBottom: 14,
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
@@ -40,9 +55,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.6),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 1),
-    },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
@@ -50,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: "auto",
     },
+    borderRadius: "1000px",
+    border: "1px solid #aaa",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -59,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    color: "#aaaaaa",
   },
   inputRoot: {
     color: "inherit",
@@ -68,13 +83,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "24ch",
-      "&:focus": {
-        width: "34ch",
-      },
+      // width: "24ch",
     },
   },
   sectionDesktop: {

@@ -10,7 +10,6 @@ import { getGuestCartItems } from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 10,
     maxWidth: "100vw",
     borderRadius: 0,
   },
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     fontFamily: "Pacifico",

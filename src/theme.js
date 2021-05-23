@@ -9,8 +9,8 @@ const theme = createMuiTheme({
     //   dark: "#29394D",
     // },
     background: {
-      paper: "#29394D",
-      default: "#29394D",
+      paper: "#f0f4f8",
+      default: "#f0f4f8",
     },
   },
   props: {
@@ -27,7 +27,8 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: "#FFD4CC",
+      main: "#f0f4f8",
+      dark: "#CFEBEC",
     },
     secondary: {
       // main: '#F6A5C0',

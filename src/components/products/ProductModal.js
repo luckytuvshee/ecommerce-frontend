@@ -32,14 +32,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
     borderRadius: 0,
+    background: "#fafafa",
   },
   paper: {
-    padding: 20,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
     maxHeight: "100vh",
     minHeight: "100%",
     borderRadius: 0,
+    padding: 10,
   },
 
   imageSlider: {
@@ -89,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
 
   count: {
     padding: "0 20px",
-    backgroundColor: theme.palette.secondary.dark,
     color: "#000 !important", // because of disabled button, I used !important
   },
 
@@ -140,24 +138,8 @@ const ProductModal = ({
 
   const [liked, setLiked] = React.useState(check_liked());
 
-  const checkRequired = () => {
-    if (selectedColorIndex === -1) {
-      toast.warn("Барааны өнгө сонгоогүй байна");
-      return false;
-    }
-
-    if (selectedSizeIndex === -1) {
-      toast.warn("Барааны хэмжээ сонгоогүй байна");
-      return false;
-    }
-
-    return true;
-  };
-
   const checkQuantity = () => {
-    const quantity =
-      selectedSizeIndex !== -1 &&
-      productsMore[id].colors[selectedColorIndex][selectedSizeIndex].quantity;
+    const quantity = productsMore[id].quantity;
 
     if (quantity >= count) {
       return true;
@@ -186,35 +168,27 @@ const ProductModal = ({
   };
 
   const addToCart = () => {
-    if (!checkRequired() || !checkQuantity()) {
+    if (!checkQuantity()) {
       return;
     }
 
     if (auth.isAuthenticated) {
-      addCartItem(
-        auth.user.id,
-        productsMore[id].colors[selectedColorIndex][selectedSizeIndex].id,
-        count
-      );
+      addCartItem(auth.user.id, id, count);
       toast.success("Сагсанд бараа нэмэгдлээ");
     } else {
-      addGuestCartItem(
-        productsMore[id].colors[selectedColorIndex][selectedSizeIndex].id,
-        count
-      );
+      addGuestCartItem(id, count);
       toast.success("Сагсанд бараа нэмэгдлээ");
     }
   };
 
   const purchaseNow = () => {
-    if (!checkRequired() || !checkQuantity()) {
+    if (!checkQuantity()) {
       return;
     }
 
     instantPurchase({
       user_id: auth.isAuthenticated ? auth.user.id : 1,
-      product_registration_id:
-        productsMore[id].colors[selectedColorIndex][selectedSizeIndex].id,
+      product_id: id,
       price: productsMore[id].price,
       quantity: count,
     });
@@ -248,7 +222,7 @@ const ProductModal = ({
     <Spinner />
   ) : (
     <Fragment>
-      <Card className={classes.root}>
+      <Card className={classes.root} elevation={0}>
         <CardContent
           className={classes.cardContent}
           style={{
@@ -256,7 +230,12 @@ const ProductModal = ({
           }}
         >
           <Grid container spacing={3} justify="center">
-            <Grid item xs={12} sm={5}>
+            <Grid
+              item
+              xs={12}
+              sm={5}
+              style={{ marginBottom: fullModalHeight ? 0 : -15 }}
+            >
               <Paper className={classes.paper}>
                 <Carousel
                   className={classes.imageSlider}
@@ -275,7 +254,12 @@ const ProductModal = ({
                 </Carousel>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={7}>
+            <Grid
+              item
+              xs={12}
+              sm={7}
+              style={{ marginBottom: fullModalHeight ? 0 : -15 }}
+            >
               <Paper className={classes.paper}>
                 <Grid container justify="space-between" alignItems="center">
                   <Grid item>
@@ -302,59 +286,8 @@ const ProductModal = ({
                 <Divider />
 
                 <Typography className={classes.typography} component="span">
-                  Өнгө
-                </Typography>
-
-                {productsMore[id].colors.map((color, index) => (
-                  <img
-                    alt={"product_image"}
-                    key={index}
-                    className={
-                      selectedColorIndex === index
-                        ? classes.selectedColorImage
-                        : classes.colorImage
-                    }
-                    onClick={() => setSelectedColorIndex(index)}
-                    src={require(`../../assets${color[0].color_image}`)}
-                  />
-                ))}
-
-                <Typography className={classes.typography} component="span">
-                  Хэмжээ{" "}
-                  <strong>
-                    {selectedColorIndex === -1
-                      ? "(Өнгөний төрөл сонгоно уу)"
-                      : ""}
-                  </strong>
-                </Typography>
-
-                {selectedColorIndex === -1
-                  ? ""
-                  : productsMore[id].colors[selectedColorIndex].map(
-                      (size, index) => (
-                        <Button
-                          className={classes.size}
-                          variant="contained"
-                          color={
-                            selectedSizeIndex === index
-                              ? "secondary"
-                              : "default"
-                          }
-                          onClick={() => setselectedSizeIndex(index)}
-                        >
-                          {size.size}
-                        </Button>
-                      )
-                    )}
-
-                <Typography className={classes.typography} component="span">
                   Нөөцөнд байгаа тоо хэмжээ
-                  <Typography>
-                    {selectedSizeIndex !== -1 &&
-                      productsMore[id].colors[selectedColorIndex][
-                        selectedSizeIndex
-                      ].quantity}
-                  </Typography>
+                  <Typography>{productsMore[id].quantity}</Typography>
                 </Typography>
 
                 <Typography className={classes.typography} component="span">
@@ -373,7 +306,11 @@ const ProductModal = ({
                   >
                     <RemoveIcon fontSize="small" />
                   </Button>
-                  <Button disabled className={classes.count} color="secondary">
+                  <Button
+                    disabled
+                    className={classes.count}
+                    style={{ background: "#ffac9b" }}
+                  >
                     {count}
                   </Button>
                   <Button

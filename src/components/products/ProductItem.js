@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -14,8 +14,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../layout/Spinner";
 import { addLikedProduct, removeLikedProduct } from "../../actions/profile";
-
+import { Link } from "react-router-dom";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import { toast } from "react-toastify";
+import "./Item.scss";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "100%",
     marginTop: 10,
     backgroundSize: "contain",
+  },
+
+  quickView: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 
   cardContent: {
@@ -54,6 +62,7 @@ const ProductItem = ({
   removeLikedProduct,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const check_liked = () => {
     if (profile.likedProducts.length === 0) return false;
@@ -104,44 +113,42 @@ const ProductItem = ({
       </CardContent>
     </Card>
   ) : (
-    <Card className={classes.root}>
-      <Link to={`/product/${id}`}>
-        <CardMedia
-          className={classes.media}
-          image={require(`../../assets${image}`)}
-          title={product_name}
-        />
-      </Link>
+    <div className="item-container">
+      <div
+        onClick={() => history.push(`/product/${id}`)}
+        className="item"
+        style={{ width: 300, height: "100%" }}
+      >
+        <div className="image">
+          <div>
+            <img
+              alt={"product_image"}
+              style={{ height: 150 }}
+              src={require(`../../assets${image}`)}
+            />
+          </div>
+          <div className="text">{price} ₮</div>
+        </div>
+        <div className="info" style={{ height: 50 }}>
+          <div className="restaurant-name">
+            <span className="name" style={{ marginTop: 10 }}>
+              <Link>{product_name}</Link>
+            </span>
+          </div>
+        </div>
+      </div>
 
-      <Link to={`/product/${id}`}>
-        <CardContent className={classes.cardContent}>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {product_name}
-          </Typography>
-          <Typography
-            style={{ paddingTop: 5 }}
-            color="textSecondary"
-            component="p"
-          >
-            ₮{price}
-          </Typography>
-        </CardContent>
-      </Link>
-      <CardActions style={{ justifyContent: "space-between" }} disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={() => like()}>
-          <FavoriteOutlinedIcon className={liked ? classes.like : null} />
-        </IconButton>
-        <Button
-          onClick={() => modalOpen(id)}
-          variant="contained"
-          color="secondary"
-          size="large"
-          style={{ borderRadius: 0 }}
-        >
-          Харах
-        </Button>
-      </CardActions>
-    </Card>
+      <IconButton aria-label="add to favorites" onClick={() => like()}>
+        <FavoriteOutlinedIcon className={liked ? classes.like : null} />
+      </IconButton>
+      <IconButton
+        className={classes.quickView}
+        aria-label="quick see"
+        onClick={() => modalOpen(id)}
+      >
+        <VisibilityIcon />
+      </IconButton>
+    </div>
   );
 };
 

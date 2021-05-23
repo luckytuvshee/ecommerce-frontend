@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+@font-face {
+  font-family: "Pacifico";
+  font-style: "normal";
+  font-display: "swap";
+  font-weight: 400;
+  src: url("./assets/fonts/Pacifico.ttf") ("truetype");
+}
+
+a {
+  text-decoration: none;
+}
+
+span {
+  display: block;
+}
+
+.MuiTextField-root span {
+  display: inline;
+}
+
+html,
+body {
+  font-family: "Nunito", sans-serif !important;
+  max-width: 1140px;
+  margin: auto;
+  background: #fafafa;
+  a {
+    outline: none !important;
+    color: rgb(112, 112, 112);
+    text-decoration: none !important;
+  }
+}
+
+.splitBlock {
+  height: 140px;
+}
+
+@media only screen and (max-width: 960px) {
+  .splitBlock {
+    height: 34px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  font-family: "Nunito" !important;
+}
+
+p,
+span {
+  font-family: "Nunito" !important;
+  font-weight: 500 !important;
+}

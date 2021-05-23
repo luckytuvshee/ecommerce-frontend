@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItem = ({
   auth: { isAuthenticated },
-  item: { id, product_registration_id, quantity },
+  item: { id, product_id, quantity },
   cart: { cartProducts, loading },
   getProduct,
   changeCartItemQuantity,
@@ -65,11 +65,11 @@ const CartItem = ({
   const [count, setCount] = React.useState(1);
 
   useEffect(() => {
-    getProduct(product_registration_id);
+    getProduct(product_id);
     setCount(quantity);
-  }, [getProduct, product_registration_id, quantity]);
+  }, [getProduct, product_id, quantity]);
 
-  return loading || !cartProducts.hasOwnProperty(product_registration_id) ? (
+  return loading || !cartProducts.hasOwnProperty(product_id) ? (
     <Spinner />
   ) : (
     <Card className={classes.root}>
@@ -81,7 +81,7 @@ const CartItem = ({
                 if (isAuthenticated) {
                   deleteCartItem(id);
                 } else {
-                  deleteGuestCartItem(product_registration_id);
+                  deleteGuestCartItem(product_id);
                 }
               }}
               style={{ background: "#5C666F", marginBottom: 15 }}
@@ -93,32 +93,30 @@ const CartItem = ({
         <Paper className={classes.paper}>
           <Grid container justify="center" alignItems="center" spacing={2}>
             <Grid item>
-              <Link
-                to={`/product/${cartProducts[product_registration_id].product_id}`}
-              >
+              <Link to={`/product/${cartProducts[product_id].id}`}>
                 <img
-                  alt={"color_image"}
+                  alt={"product"}
                   width="150"
-                  src={require(`../../assets${cartProducts[product_registration_id].color_image}`)}
+                  src={require(`../../assets${cartProducts[product_id].image}`)}
                 />
               </Link>
             </Grid>
             <Grid item>
               <Typography>
                 <strong>Бараа: </strong>
-                {cartProducts[product_registration_id].product_name}
+                {cartProducts[product_id].product_name}
               </Typography>
               <Typography>
                 <strong>Өнгө: </strong>
-                {cartProducts[product_registration_id].color}
+                {cartProducts[product_id].color}
               </Typography>
               <Typography>
                 <strong>Хэмжээ: </strong>
-                {cartProducts[product_registration_id].size}
+                {cartProducts[product_id].size}
               </Typography>
               <Typography>
                 <strong>Агуулахад байгаа тоо: </strong>
-                {cartProducts[product_registration_id].quantity}
+                {cartProducts[product_id].quantity}
               </Typography>
 
               <Divider className={classes.divider} />
@@ -136,17 +134,18 @@ const CartItem = ({
                       if (isAuthenticated) {
                         changeCartItemQuantity(id, newCount);
                       } else {
-                        changeGuestCartItemQuantity(
-                          product_registration_id,
-                          newCount
-                        );
+                        changeGuestCartItemQuantity(product_id, newCount);
                       }
                     }
                   }}
                 >
                   <RemoveIcon fontSize="small" />
                 </Button>
-                <Button disabled className={classes.count} color="secondary">
+                <Button
+                  disabled
+                  className={classes.count}
+                  style={{ background: "#ffac9b" }}
+                >
                   {count}
                 </Button>
                 <Button
@@ -158,10 +157,7 @@ const CartItem = ({
                       changeCartItemQuantity(id, newCount);
                     } else {
                       console.log("count: " + newCount);
-                      changeGuestCartItemQuantity(
-                        product_registration_id,
-                        newCount
-                      );
+                      changeGuestCartItemQuantity(product_id, newCount);
                     }
                   }}
                 >
@@ -172,10 +168,10 @@ const CartItem = ({
               <Grid container justify="flex-start" alignItems="center">
                 <Grid item>
                   <Typography variant="h5" component="span">
-                    {cartProducts[product_registration_id].price * count} ₮
+                    {cartProducts[product_id].price * count} ₮
                   </Typography>
                   <Typography component="span">
-                    Нэгж үнэ: {cartProducts[product_registration_id].price}
+                    Нэгж үнэ: {cartProducts[product_id].price}
                   </Typography>
                 </Grid>
               </Grid>

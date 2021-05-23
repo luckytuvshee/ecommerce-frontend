@@ -7,10 +7,10 @@ import {
   MAKE_GUEST_ORDER,
   MAKE_INSTANT_ORDER,
   CLEAR_INSTANT_PURCHASE_INFO,
-} from './types';
-import axios from 'axios';
-import { getCartItems, clearCartCache, clearCookie } from './cart';
-import { toast } from 'react-toastify';
+} from "./types";
+import axios from "axios";
+import { getCartItems, clearCartCache, clearCookie } from "./cart";
+import { toast } from "react-toastify";
 
 export const getUserOrders = (id) => async (dispatch) => {
   try {
@@ -28,22 +28,19 @@ export const getUserOrders = (id) => async (dispatch) => {
   }
 };
 
-export const instantPurchase = ({
-  user_id,
-  product_registration_id,
-  quantity,
-  price,
-}) => (dispatch) => {
-  dispatch({
-    type: SET_INSTANT_PURCHASE_INFO,
-    payload: {
-      user_id,
-      product_registration_id,
-      quantity,
-      price,
-    },
-  });
-};
+export const instantPurchase =
+  ({ user_id, product_id, quantity, price }) =>
+  (dispatch) => {
+    dispatch({
+      type: SET_INSTANT_PURCHASE_INFO,
+      payload: {
+        user_id,
+        product_id,
+        quantity,
+        price,
+      },
+    });
+  };
 
 export const clearInstantPurchase = () => (dispatch) => {
   dispatch({
@@ -51,123 +48,111 @@ export const clearInstantPurchase = () => (dispatch) => {
   });
 };
 
-export const makeInstantOrder = ({
-  user_id,
-  product_registration_id,
-  quantity,
-  address_id,
-  account_number,
-}) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+export const makeInstantOrder =
+  ({ user_id, product_id, quantity, address_id, account_number }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({
+      user_id,
+      product_id,
+      quantity,
+      address_id,
+      account_number,
+    });
+
+    try {
+      const res = await axios.post("/api/orders/instant", body, config);
+
+      dispatch({
+        type: MAKE_INSTANT_ORDER,
+        payload: res.data,
+      });
+
+      dispatch({
+        type: CLEAR_INSTANT_PURCHASE_INFO,
+      });
+    } catch (err) {
+      dispatch({
+        type: ORDER_ERROR,
+        payload: err,
+      });
+    }
   };
 
-  const body = JSON.stringify({
-    user_id,
-    product_registration_id,
-    quantity,
-    address_id,
-    account_number,
-  });
+export const makeOrder =
+  ({ user_id, basket_id, address_id, account_number, amount }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  try {
-    const res = await axios.post('/api/orders/instant', body, config);
-
-    dispatch({
-      type: MAKE_INSTANT_ORDER,
-      payload: res.data,
+    const body = JSON.stringify({
+      user_id,
+      basket_id,
+      address_id,
+      account_number,
+      amount,
     });
 
-    dispatch({
-      type: CLEAR_INSTANT_PURCHASE_INFO,
-    });
-  } catch (err) {
-    dispatch({
-      type: ORDER_ERROR,
-      payload: err,
-    });
-  }
-};
+    try {
+      const res = await axios.post("/api/orders", body, config);
 
-export const makeOrder = ({
-  user_id,
-  basket_id,
-  address_id,
-  account_number,
-  amount,
-}) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+      dispatch({
+        type: MAKE_ORDER,
+        payload: res.data,
+      });
+
+      dispatch(getCartItems(user_id));
+      dispatch(clearCartCache());
+    } catch (err) {
+      dispatch({
+        type: ORDER_ERROR,
+        payload: err,
+      });
+    }
   };
 
-  const body = JSON.stringify({
-    user_id,
-    basket_id,
-    address_id,
-    account_number,
-    amount,
-  });
+export const makeGuestOrder =
+  ({ user_id, cartItems, address_id, account_number, amount }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  try {
-    const res = await axios.post('/api/orders', body, config);
-
-    dispatch({
-      type: MAKE_ORDER,
-      payload: res.data,
+    const body = JSON.stringify({
+      user_id,
+      cartItems,
+      address_id,
+      account_number,
+      amount,
     });
 
-    dispatch(getCartItems(user_id));
-    dispatch(clearCartCache());
-  } catch (err) {
-    dispatch({
-      type: ORDER_ERROR,
-      payload: err,
-    });
-  }
-};
+    try {
+      const res = await axios.post("/api/orders/guest", body, config);
 
-export const makeGuestOrder = ({
-  user_id,
-  cartItems,
-  address_id,
-  account_number,
-  amount,
-}) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+      dispatch({
+        type: MAKE_GUEST_ORDER,
+        payload: res.data,
+      });
+
+      dispatch(clearCookie());
+      dispatch(clearCartCache());
+    } catch (err) {
+      dispatch({
+        type: ORDER_ERROR,
+        payload: err,
+      });
+    }
   };
-
-  const body = JSON.stringify({
-    user_id,
-    cartItems,
-    address_id,
-    account_number,
-    amount,
-  });
-
-  try {
-    const res = await axios.post('/api/orders/guest', body, config);
-
-    dispatch({
-      type: MAKE_GUEST_ORDER,
-      payload: res.data,
-    });
-
-    dispatch(clearCookie());
-    dispatch(clearCartCache());
-  } catch (err) {
-    dispatch({
-      type: ORDER_ERROR,
-      payload: err,
-    });
-  }
-};
 
 export const setOrderAddress = (id) => (dispatch) => {
   dispatch({

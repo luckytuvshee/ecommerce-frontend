@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   GET_CART_ITEMS,
   ADD_CART_ITEM,
@@ -13,10 +13,10 @@ import {
   GET_GUEST_CART_ITEMS,
   CLEAR_COOKIE,
   IMPORT_CART_ITEM_FROM_COOKIE,
-} from '../actions/types';
-import { toast } from 'react-toastify';
-import { clearInstantPurchase } from './order';
-import Cookies from 'universal-cookie';
+} from "../actions/types";
+import { toast } from "react-toastify";
+import { clearInstantPurchase } from "./order";
+import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 // Get Cart Items
@@ -41,7 +41,7 @@ export const getCartItems = (user_id) => async (dispatch) => {
 export const changeCartItemQuantity = (id, quantity) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
@@ -66,43 +66,43 @@ export const changeCartItemQuantity = (id, quantity) => async (dispatch) => {
   }
 };
 
-export const addCartItem = (
-  user_id,
-  product_registration_id,
-  quantity
-) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+export const addCartItem =
+  (user_id, product_id, quantity) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  dispatch(clearInstantPurchase());
+    dispatch(clearInstantPurchase());
 
-  const body = JSON.stringify({ user_id, product_registration_id, quantity });
+    const body = JSON.stringify({ user_id, product_id, quantity });
 
-  try {
-    const res = await axios.post('/api/baskets', body, config);
+    try {
+      const res = await axios.post("/api/baskets", body, config);
 
-    if (res.data.updated === 0) {
+      console.log("body:", body);
+      console.log("res:", res);
+
+      if (res.data.updated === 0) {
+        dispatch({
+          type: ADD_CART_ITEM,
+          payload: res.data.basket,
+        });
+      } else {
+        dispatch({
+          type: CHANGE_ITEM_QUANTITY,
+          payload: res.data.basket,
+        });
+      }
+    } catch (err) {
+      toast.error(JSON.stringify(err));
       dispatch({
-        type: ADD_CART_ITEM,
-        payload: res.data.basket,
-      });
-    } else {
-      dispatch({
-        type: CHANGE_ITEM_QUANTITY,
-        payload: res.data.basket,
+        type: CART_ERROR,
+        payload: { msg: err },
       });
     }
-  } catch (err) {
-    toast.error(JSON.stringify(err));
-    dispatch({
-      type: CART_ERROR,
-      payload: { msg: err },
-    });
-  }
-};
+  };
 
 // Delete Cart Item
 // id is basket item id
@@ -142,18 +142,16 @@ export const clearCookie = () => (dispatch) => {
 };
 
 // Get Cart Product
-export const getProduct = (product_registration_id) => async (dispatch) => {
+export const getProduct = (product_id) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `/api/basket/product/${product_registration_id}`
-    );
-    console.log('res data');
-    console.log(res.data.product_registration);
+    const res = await axios.get(`/api/basket/product/${product_id}`);
+    console.log("res data");
+    console.log(res.data.product);
     dispatch({
       type: GET_CART_PRODUCT,
       payload: {
-        product: res.data.product_registration,
-        id: product_registration_id,
+        product: res.data.product,
+        id: product_id,
       },
     });
   } catch (err) {
@@ -174,18 +172,14 @@ export const importCartItemsFromCookie = (user_id) => async (dispatch) => {
     };
   });
 
-  console.log(cartItems);
-  console.log(user_id);
+  console.log("cartItems:", cartItems);
+  console.log("user_id:", user_id);
 
   for (let i = 0; i < cartItems.length; i++) {
-    console.log(i + ': ' + cartItems[i].product_registration_id);
-    console.log(i + ': ' + cartItems[i].quantity);
+    console.log(i + ": " + cartItems[i].product_id);
+    console.log(i + ": " + cartItems[i].quantity);
     dispatch(
-      addCartItem(
-        user_id,
-        cartItems[i].product_registration_id,
-        cartItems[i].quantity
-      )
+      addCartItem(user_id, cartItems[i].product_id, cartItems[i].quantity)
     );
   }
 
@@ -198,32 +192,34 @@ export const importCartItemsFromCookie = (user_id) => async (dispatch) => {
 
 // GUEST
 
-export const addGuestCartItem = (product_registration_id, quantity) => (
-  dispatch
-) => {
-  const item = cookies.get(product_registration_id);
+export const addGuestCartItem =
+  (product_registration_id, quantity) => (dispatch) => {
+    const item = cookies.get(product_registration_id);
 
-  toast.success(item);
+    toast.success(item);
 
-  if (item) {
-    cookies.set(product_registration_id, parseInt(item) + quantity);
-    dispatch({
-      type: CHANGE_GUEST_ITEM_QUANTITY,
-      payload: { product_registration_id, quantity: parseInt(item) + quantity },
-    });
-  } else {
-    const cartItem = {
-      product_registration_id,
-      quantity,
-    };
+    if (item) {
+      cookies.set(product_registration_id, parseInt(item) + quantity);
+      dispatch({
+        type: CHANGE_GUEST_ITEM_QUANTITY,
+        payload: {
+          product_registration_id,
+          quantity: parseInt(item) + quantity,
+        },
+      });
+    } else {
+      const cartItem = {
+        product_registration_id,
+        quantity,
+      };
 
-    dispatch({
-      type: ADD_GUEST_CART_ITEM,
-      payload: cartItem,
-    });
-    cookies.set(product_registration_id, quantity);
-  }
-};
+      dispatch({
+        type: ADD_GUEST_CART_ITEM,
+        payload: cartItem,
+      });
+      cookies.set(product_registration_id, quantity);
+    }
+  };
 
 // Get Guest Cart Items
 export const getGuestCartItems = () => async (dispatch) => {
@@ -263,17 +259,15 @@ export const deleteGuestCartItem = (product_registration_id) => (dispatch) => {
 
 // Change Cart Item Quantity
 // id is item product_registration_id
-export const changeGuestCartItemQuantity = (
-  product_registration_id,
-  quantity
-) => (dispatch) => {
-  cookies.set(product_registration_id, quantity);
+export const changeGuestCartItemQuantity =
+  (product_registration_id, quantity) => (dispatch) => {
+    cookies.set(product_registration_id, quantity);
 
-  dispatch({
-    type: CHANGE_GUEST_ITEM_QUANTITY,
-    payload: {
-      product_registration_id,
-      quantity: quantity,
-    },
-  });
-};
+    dispatch({
+      type: CHANGE_GUEST_ITEM_QUANTITY,
+      payload: {
+        product_registration_id,
+        quantity: quantity,
+      },
+    });
+  };

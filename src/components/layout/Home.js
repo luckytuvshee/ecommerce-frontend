@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Products from '../products/Products';
-import PopularProducts from '../products/PopularProducts';
-import MostPurchasedProducts from '../products/MostPurchasedProducts';
+import React, { Fragment } from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import Products from "../products/Products";
+import PopularProducts from "../products/PopularProducts";
 
 const Home = () => {
   return (
@@ -11,7 +10,6 @@ const Home = () => {
       <CssBaseline />
       <Container maxWidth="lg">
         <PopularProducts />
-        <MostPurchasedProducts />
         <Products />
       </Container>
     </Fragment>

@@ -1,7 +1,7 @@
-import React from 'react';
-import ProductModal from '../products/ProductModal';
-import Grid from '@material-ui/core/Grid';
-import SimilarProducts from '../products/SimilarProducts';
+import React from "react";
+import ProductModal from "../products/ProductModal";
+import Grid from "@material-ui/core/Grid";
+import SimilarProducts from "../products/SimilarProducts";
 
 const Product = ({ match }) => {
   return (

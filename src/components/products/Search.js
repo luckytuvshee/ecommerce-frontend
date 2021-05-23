@@ -40,10 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
   typography: {
     padding: 80,
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
   },
 }));
 
@@ -118,7 +114,7 @@ const Search = ({
         className={classes.typography}
         variant="h3"
         color="textSecondary"
-        style={{ background: "#fff", textAlign: "center" }}
+        style={{ background: "#fafafa", textAlign: "center" }}
       >
         Хайх утгаа оруулна уу
       </Typography>

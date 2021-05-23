@@ -36,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
     padding: "80px 0",
     textAlign: "center",
   },

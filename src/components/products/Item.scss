@@ -1,0 +1,80 @@
+.item-container {
+  padding: 6px 7px;
+
+  .item {
+    position: relative;
+    height: 300px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    .image {
+      position: relative;
+      height: 180px;
+      width: 100%;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+      }
+
+      .text {
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background-color: rgb(180, 180, 180);
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #fff;
+      }
+    }
+
+    .info {
+      flex-direction: column;
+      display: flex;
+      height: 120px;
+
+      .restaurant-name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 5px;
+
+        .name {
+          color: rgb(153, 153, 153);
+          font-weight: bold;
+          font-size: 16px;
+          margin-right: 10px;
+        }
+
+        .status {
+          background-color: lightgreen;
+          width: 10px;
+          height: 10px;
+          border-radius: 50px;
+          align-self: center;
+        }
+      }
+
+      .tags {
+        color: rgb(154, 154, 154);
+      }
+
+      .delivery-price {
+        color: rgb(191, 122, 133);
+      }
+    }
+  }
+}

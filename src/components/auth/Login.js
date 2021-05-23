@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 30,
-    borderRadius: 0,
+    borderRadius: 5,
   },
 
   typography: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
   button: {
     marginTop: 15,
-    borderRadius: 0,
+    borderRadius: 5,
   },
 });
 

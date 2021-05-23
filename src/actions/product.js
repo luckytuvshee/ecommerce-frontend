@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   GET_PRODUCTS,
   GET_PRODUCT,
@@ -14,12 +14,12 @@ import {
   GET_SIMILAR_PRODUCTS,
   GET_POPULAR_PRODUCTS,
   GET_MOST_PURCHASED_PRODUCTS,
-} from './types';
+} from "./types";
 
 // Get products
 export const getProducts = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/products');
+    const res = await axios.get("/api/products");
 
     dispatch({
       type: GET_PRODUCTS,
@@ -35,7 +35,7 @@ export const getProducts = () => async (dispatch) => {
 
 // Get product
 export const getProduct = (id) => async (dispatch) => {
-  console.log('id: ' + id);
+  console.log("id: " + id);
   try {
     const res = await axios.get(`/api/products/${id}`);
     dispatch({
@@ -56,7 +56,7 @@ export const getProduct = (id) => async (dispatch) => {
 // Get product types
 export const getProductTypes = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/product/types');
+    const res = await axios.get("/api/product/types");
     dispatch({
       type: GET_PRODUCT_TYPES,
       payload: res.data,
@@ -72,7 +72,7 @@ export const getProductTypes = () => async (dispatch) => {
 // Get product brands
 export const getProductBrands = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/product/brands');
+    const res = await axios.get("/api/product/brands");
     dispatch({
       type: GET_PRODUCT_BRANDS,
       payload: res.data,
@@ -90,7 +90,7 @@ export const getTypeProducts = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/type/${id}`);
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -110,7 +110,7 @@ export const getTypeGroupProducts = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/type/group/${id}`);
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -130,7 +130,7 @@ export const getBrandProducts = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/brand/${id}`);
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -150,7 +150,7 @@ export const getSimilarProducts = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/like/${id}`);
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -169,9 +169,9 @@ export const getSimilarProducts = (id) => async (dispatch) => {
 // Get popular products
 export const getPopularProducts = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/products/popular');
+    const res = await axios.get("/api/products/popular");
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -190,9 +190,9 @@ export const getPopularProducts = () => async (dispatch) => {
 // Get most purchased products
 export const getMostPurchasedProducts = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/products/most-purchased');
+    const res = await axios.get("/api/products/most-purchased");
 
-    console.log('res');
+    console.log("res");
     console.log(res.data);
 
     dispatch({
@@ -220,14 +220,16 @@ export const searchText = (text) => (dispatch) => {
 export const fetchSearchResult = (value) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify({ value });
 
   try {
-    const res = await axios.post('/api/products/search', body, config);
+    const res = await axios.post("/api/products/search", body, config);
+
+    console.log("res:", res.data);
 
     dispatch({
       type: FETCH_SEARCH_RESULT,

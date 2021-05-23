@@ -14,9 +14,9 @@ import { getLikedProducts } from "../../actions/profile";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    padding: "10px 20px",
     textAlign: "center",
     borderRadius: 0,
+    background: "#fafafa",
   },
   paper: {
     padding: theme.spacing(2),
@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    padding: 80,
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
+    fontFamily: "Nunito, sans-serif !important",
+    fontWeight: 700,
+    padding: "80px 0",
+    paddingTop: 20,
+    textAlign: "left",
   },
 }));
 
@@ -97,8 +97,7 @@ const Products = ({
         >
           Шинээр нэмэгдсэн бараанууд
         </Typography>
-
-        <Grid container spacing={3} justify="center">
+        <Grid container spacing={3} justify="space-evenly">
           {products.map((product) => (
             <Grid key={product.id} item xs="auto" sm="auto" md="auto" lg="auto">
               <ProductItem modalOpen={handleOpen} product={product} />

@@ -81,9 +81,7 @@ const CartItem = ({
               <Typography variant="h5" component="span">
                 {cartItems.reduce((a, b) => {
                   return (
-                    a +
-                    b["quantity"] *
-                      cartProducts[b["product_registration_id"]].price
+                    a + b["quantity"] * cartProducts[b["product_id"]].price
                   );
                 }, 0)}{" "}
                 ₮

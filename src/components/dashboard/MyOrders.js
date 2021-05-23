@@ -50,43 +50,41 @@ const MyOrders = ({ auth, order: { loading, userOrders }, getUserOrders }) => {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <div>
-              {order.product_registrations.map((product_registration) => (
+              {order.products.map((product) => (
                 <Grid container spacing={3}>
                   <Grid item>
-                    <Link to={`/product/${product_registration.product_id}`}>
+                    <Link to={`/product/${product.id}`}>
                       <img
-                        alt={"color_image"}
+                        alt={"product"}
                         width="150"
-                        src={require(`../../assets${product_registration.color_image}`)}
+                        src={require(`../../assets${product.image}`)}
                       />
                     </Link>
                   </Grid>
                   <Grid item>
                     <Typography>
                       <strong>Бараа: </strong>
-                      {product_registration.product_name}
+                      {product.product_name}
                     </Typography>
                     <Typography>
                       <strong>Өнгө: </strong>
-                      {product_registration.color}
+                      {product.color}
                     </Typography>
                     <Typography>
                       <strong>Хэмжээ: </strong>
-                      {product_registration.size}
+                      {product.size}
                     </Typography>
                     <Typography>
                       <strong>Нэгж үнэ: </strong>
-                      {product_registration.price}₮
+                      {product.price}₮
                     </Typography>
                     <Typography>
                       <strong>Тоо ширхэг: </strong>
-                      {product_registration.quantity}
+                      {product.quantity}
                     </Typography>
                     <Typography>
                       <strong>Нийт үнэ: </strong>
-                      {product_registration.price *
-                        product_registration.quantity}
-                      ₮
+                      {product.price * product.quantity}₮
                     </Typography>
                   </Grid>
                 </Grid>

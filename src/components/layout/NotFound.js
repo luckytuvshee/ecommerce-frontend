@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
   typography: {
     marginTop: 10,
-    fontSize: 46,
+    fontSize: 34,
     textAlign: "center",
     textTransform: "uppercase",
     fontWeight: 700,
@@ -40,7 +40,10 @@ const NotFound = () => {
           alignItems="center"
           style={{ minHeight: 300 }}
         >
-          <img src={require("../../assets/images/not_found_page.png")} />
+          <img
+            style={{ width: 250 }}
+            src={require("../../assets/images/not_found_page.png")}
+          />
 
           <Typography component="h2" className={classes.typography}>
             Хуудас олдсонгүй

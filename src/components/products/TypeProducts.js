@@ -39,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
   typography: {
     padding: 80,
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
   },
 }));
 
@@ -282,7 +278,7 @@ const TypeProducts = ({
               className={classes.typography}
               variant="h3"
               color="textSecondary"
-              style={{ background: "#fff" }}
+              style={{ background: "#fafafa" }}
             >
               Бараа байхгүй байна
             </Typography>

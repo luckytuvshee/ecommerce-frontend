@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ScrollToTop from "./utils/ScrollToTop";
 
-import "./App.css";
+import "./App.scss";
 
 if (localStorage.getItem("token")) {
   setAuthToken(localStorage.getItem("token"));
@@ -38,11 +38,13 @@ const App = () => {
           <Fragment>
             <ScrollToTop />
             <Navbar />
+            <div className="splitBlock" />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route component={Routes} />
             </Switch>
           </Fragment>
+          <div style={{ marginBottom: 50 }} />
         </ThemeProvider>
       </Router>
     </Provider>

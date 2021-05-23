@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, useState, useCallback, Fragment } from "react";
 import Swiper from "react-id-swiper";
 import "swiper/css/swiper.css";
 import { connect } from "react-redux";
@@ -8,12 +8,70 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Spinner from "../layout/Spinner";
 import { getPopularProducts } from "../../actions/product";
+import Slider from "react-slick";
+import styled from "styled-components";
+import { useWindow } from "../../hooks";
+import Item from "../carousel/Item";
+
+const StyledArrow = styled.div`
+  position: absolute;
+  top: calc(50% + 30px);
+  z-index: 99;
+  background: #fff none repeat scroll 0 0 !important;
+  border-radius: 30px !important;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
+  color: #000 !important;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 !important;
+  text-align: center;
+  text-transform: uppercase;
+  width: 40px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    border: 2px solid;
+  }
+`;
+
+const SampleNextArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <StyledArrow
+      className={className}
+      style={{
+        ...style,
+        right: -15,
+      }}
+      onClick={onClick}
+    >
+      <ChevronRightIcon />
+    </StyledArrow>
+  );
+};
+
+const SamplePrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <StyledArrow
+      className={className}
+      style={{ ...style, left: -15 }} // should be -25
+      onClick={onClick}
+    >
+      <ChevronLeftIcon />
+    </StyledArrow>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "10px 60px",
     margin: "auto",
     borderRadius: 0,
   },
@@ -35,12 +93,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    backgroundImage: `url(${require("../../assets/images/heading_background.png")})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
+    fontFamily: "Nunito, sans-serif !important",
+    fontWeight: 700,
     padding: "80px 0",
-    textAlign: "center",
   },
 
   cardContent: {
@@ -61,87 +116,83 @@ const PopularProducts = ({
   product: { popularProducts, loading },
   history,
 }) => {
+  const [width] = useWindow();
   const classes = useStyles();
-
-  const params = {
-    slidesPerView: 5,
-    spaceBetween: 50,
-    rebuildOnUpdate: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      1024: {
-        slidesPerView: 4,
-        spaceBetween: 20,
-      },
-      768: {
-        slidesPerView: 3,
-        spaceBetween: 20,
-      },
-      640: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20,
-      },
-    },
-  };
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     getPopularProducts();
   }, [getPopularProducts]);
 
+  const slidesCount = () => {
+    if (width < 481) {
+      return 1;
+    } else if (width < 769) {
+      return 2;
+    } else if (width < 1140) {
+      return 3;
+    } else {
+      return 4;
+    }
+  };
+
+  const handleBeforeChange = useCallback(() => {
+    setDragging(true);
+  }, [setDragging]);
+
+  const handleAfterChange = useCallback(() => {
+    setDragging(false);
+  }, [setDragging]);
+
+  const handleOnItemClick = useCallback(
+    (e, id) => {
+      if (dragging) e.stopPropagation();
+      else history.push(`/product/${id}`);
+    },
+    [dragging]
+  );
+
+  const settings = {
+    className: "center",
+    infinite: true,
+    centerPadding: "60px",
+    slidesToShow: slidesCount(),
+    swipeToSlide: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
   return loading ? (
     <Spinner />
   ) : (
     <Fragment>
-      <Typography
-        className={classes.typography}
-        variant="h3"
-        color="textSecondary"
-      >
-        Хандалт ихтэй бараанууд
-      </Typography>
       <Grid
         style={{
           marginBottom: 50,
         }}
         justify="space-between"
-        container
         className={classes.root}
       >
-        <Swiper {...params}>
-          {popularProducts.map((product, index) => (
-            <Card key={index} className={classes.card}>
-              <Link to={`/product/${product.id}`}>
-                <Grid container justify="center">
-                  <Grid item>
-                    <CardContent className={classes.cardContent}>
-                      <img
-                        alt={"product_image"}
-                        height="250"
-                        style={{ objectFit: "contains" }}
-                        src={require(`../../assets${product.image}`)}
-                      />
-                      <Typography
-                        variant="h6"
-                        color="textSecondary"
-                        component="p"
-                        style={{ textAlign: "center" }}
-                      >
-                        {product.product_name}
-                      </Typography>
-                    </CardContent>
-                  </Grid>
-                </Grid>
-              </Link>
-            </Card>
+        <Typography
+          className={classes.typography}
+          variant="h3"
+          color="textSecondary"
+        >
+          Эрэлттэй бараанууд
+        </Typography>
+        <Slider
+          beforeChange={handleBeforeChange}
+          afterChange={handleAfterChange}
+          {...settings}
+        >
+          {popularProducts.map((product) => (
+            <Item
+              key={product.id}
+              product={product}
+              handleOnItemClick={handleOnItemClick}
+            />
           ))}
-        </Swiper>
+        </Slider>
       </Grid>
     </Fragment>
   );

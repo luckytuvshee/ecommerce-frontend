@@ -92,9 +92,10 @@ const Navbar = ({
             <MenuIcon />
           </IconButton>
           <MenuItem component={Link} to="/">
-            <Typography variant="h6" noWrap>
-              Онлайн дэлгүүр
-            </Typography>
+            <img
+              style={{ width: 50, marginLeft: -20 }}
+              src={require("../../assets/images/leaf.png")}
+            />
           </MenuItem>
         </Toolbar>
         <List>
@@ -303,7 +304,7 @@ const Navbar = ({
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <React.Fragment key={"left"}>
             <Drawer
               transitionDuration={50}
@@ -314,21 +315,26 @@ const Navbar = ({
               {list()}
             </Drawer>
           </React.Fragment>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
 
-          <MenuItem component={Link} to="/">
-            <Typography variant="h6" noWrap>
-              Онлайн дэлгүүр
-            </Typography>
-          </MenuItem>
+          <div style={{ display: "flex" }}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <MenuItem component={Link} to="/">
+              <img
+                className={classes.appName}
+                style={{ width: 50 }}
+                src={require("../../assets/images/leaf.png")}
+              />
+            </MenuItem>
+          </div>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -343,13 +349,15 @@ const Navbar = ({
                     history.push("/search");
                     searchText(searchInput.trim());
                     fetchSearchResult(searchInput);
+                    setSearchInput("");
                   }
                 }
               }}
+              value={searchInput}
               onChange={(e) => {
                 setSearchInput(e.target.value);
               }}
-              placeholder="Хайх…"
+              placeholder="Хайх утга"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -357,7 +365,6 @@ const Navbar = ({
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton onClick={() => history.push("/cart")} color="inherit">
               <Badge
@@ -450,32 +457,6 @@ const Navbar = ({
                   </ListItem>
                 </StyledMenuItem>
               ))}
-          </Menu>
-
-          <Button aria-haspopup="true" onClick={handleBrandMenuOpen}>
-            Брэнд
-            <ExpandMoreIcon />
-          </Button>
-          <Menu
-            id="fade-menu"
-            anchorEl={anchorBrandMenuEl}
-            keepMounted
-            open={Boolean(anchorBrandMenuEl)}
-            onClose={handleBrandMenuClose}
-            TransitionComponent={Fade}
-          >
-            {productBrands.map((menu, index) => (
-              <StyledMenuItem key={index}>
-                <ListItem
-                  className={classes.listItem}
-                  onClick={handleBrandMenuClose}
-                  component={Link}
-                  to={`/products/brand/${menu.id}`}
-                >
-                  {menu.brand_name}
-                </ListItem>
-              </StyledMenuItem>
-            ))}
           </Menu>
         </Toolbar>
       </AppBar>

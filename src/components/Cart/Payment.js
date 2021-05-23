@@ -61,18 +61,13 @@ const Payment = ({
 
   const makeOrderPayment = () => {
     if (instantPurchaseInfo !== null) {
-      const {
-        user_id,
-        product_registration_id,
-        quantity,
-        price,
-      } = instantPurchaseInfo;
+      const { user_id, product_id, quantity, price } = instantPurchaseInfo;
 
       setTotalAmount(price * quantity);
 
       makeInstantOrder({
         user_id,
-        product_registration_id,
+        product_id,
         quantity,
         address_id: orderAddress,
       });
@@ -83,9 +78,7 @@ const Payment = ({
 
     if (auth.isAuthenticated) {
       const amount = cartItems.reduce((a, b) => {
-        return (
-          a + b["quantity"] * cartProducts[b["product_registration_id"]].price
-        );
+        return a + b["quantity"] * cartProducts[b["product_id"]].price;
       }, 0);
 
       setTotalAmount(amount);
@@ -98,9 +91,7 @@ const Payment = ({
       });
     } else {
       const amount = guestCartItems.reduce((a, b) => {
-        return (
-          a + b["quantity"] * cartProducts[b["product_registration_id"]].price
-        );
+        return a + b["quantity"] * cartProducts[b["product_i"]].pricde;
       }, 0);
 
       setTotalAmount(amount);
