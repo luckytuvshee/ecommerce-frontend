@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 
   typography: {
-    fontFamily: "Pacifico",
+    fontFamily: "Ubuntu Condensed !important",
   },
 
   textField: {

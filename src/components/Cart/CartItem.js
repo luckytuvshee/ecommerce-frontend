@@ -107,14 +107,6 @@ const CartItem = ({
                 {cartProducts[product_id].product_name}
               </Typography>
               <Typography>
-                <strong>Өнгө: </strong>
-                {cartProducts[product_id].color}
-              </Typography>
-              <Typography>
-                <strong>Хэмжээ: </strong>
-                {cartProducts[product_id].size}
-              </Typography>
-              <Typography>
                 <strong>Агуулахад байгаа тоо: </strong>
                 {cartProducts[product_id].quantity}
               </Typography>

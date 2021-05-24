@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
   typography: {
     padding: 80,
+    fontFamily: "Ubuntu Condensed !important",
   },
 }));
 

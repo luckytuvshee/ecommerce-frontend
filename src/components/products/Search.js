@@ -202,7 +202,7 @@ const Search = ({
             <Button
               type="submit"
               variant="contained"
-              color="default"
+              color="primary"
               size="large"
               className={classes.button}
               onClick={clear}

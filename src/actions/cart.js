@@ -167,7 +167,7 @@ export const importCartItemsFromCookie = (user_id) => async (dispatch) => {
 
   cartItems = cartItems.map((item) => {
     return {
-      product_registration_id: item[0],
+      product_id: item[0],
       quantity: item[1],
     };
   });
@@ -192,34 +192,31 @@ export const importCartItemsFromCookie = (user_id) => async (dispatch) => {
 
 // GUEST
 
-export const addGuestCartItem =
-  (product_registration_id, quantity) => (dispatch) => {
-    const item = cookies.get(product_registration_id);
+export const addGuestCartItem = (product_id, quantity) => (dispatch) => {
+  const item = cookies.get(product_id);
 
-    toast.success(item);
+  if (item) {
+    cookies.set(product_id, parseInt(item) + quantity);
+    dispatch({
+      type: CHANGE_GUEST_ITEM_QUANTITY,
+      payload: {
+        product_id,
+        quantity: parseInt(item) + quantity,
+      },
+    });
+  } else {
+    const cartItem = {
+      product_id,
+      quantity,
+    };
 
-    if (item) {
-      cookies.set(product_registration_id, parseInt(item) + quantity);
-      dispatch({
-        type: CHANGE_GUEST_ITEM_QUANTITY,
-        payload: {
-          product_registration_id,
-          quantity: parseInt(item) + quantity,
-        },
-      });
-    } else {
-      const cartItem = {
-        product_registration_id,
-        quantity,
-      };
-
-      dispatch({
-        type: ADD_GUEST_CART_ITEM,
-        payload: cartItem,
-      });
-      cookies.set(product_registration_id, quantity);
-    }
-  };
+    dispatch({
+      type: ADD_GUEST_CART_ITEM,
+      payload: cartItem,
+    });
+    cookies.set(product_id, quantity);
+  }
+};
 
 // Get Guest Cart Items
 export const getGuestCartItems = () => async (dispatch) => {
@@ -227,7 +224,7 @@ export const getGuestCartItems = () => async (dispatch) => {
 
   cartItems = cartItems.map((item) => {
     return {
-      product_registration_id: item[0],
+      product_id: item[0],
       quantity: item[1],
     };
   });
@@ -248,25 +245,25 @@ export const getGuestCartItems = () => async (dispatch) => {
 };
 
 // delete guest cart item
-export const deleteGuestCartItem = (product_registration_id) => (dispatch) => {
-  cookies.remove(product_registration_id);
+export const deleteGuestCartItem = (product_id) => (dispatch) => {
+  cookies.remove(product_id);
 
   dispatch({
     type: DELETE_GUEST_CART_ITEM,
-    payload: product_registration_id,
+    payload: product_id,
   });
 };
 
 // Change Cart Item Quantity
-// id is item product_registration_id
+// id is item product_id
 export const changeGuestCartItemQuantity =
-  (product_registration_id, quantity) => (dispatch) => {
-    cookies.set(product_registration_id, quantity);
+  (product_id, quantity) => (dispatch) => {
+    cookies.set(product_id, quantity);
 
     dispatch({
       type: CHANGE_GUEST_ITEM_QUANTITY,
       payload: {
-        product_registration_id,
+        product_id,
         quantity: quantity,
       },
     });

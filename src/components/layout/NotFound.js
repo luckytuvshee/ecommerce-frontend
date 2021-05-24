@@ -52,6 +52,7 @@ const NotFound = () => {
             type="submit"
             variant="contained"
             color="secondary"
+            style={{ color: "inherit" }}
             size="large"
             className={classes.button}
             component={Link}

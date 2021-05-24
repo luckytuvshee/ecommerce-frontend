@@ -10,7 +10,8 @@ import { getGuestCartItems } from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "100vw",
+    width: "100%",
+    margin: "auto",
     borderRadius: 0,
   },
   paper: {
@@ -23,11 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    fontFamily: "Pacifico",
     padding: "80px 0",
     textAlign: "center",
+    fontFamily: "Ubuntu Condensed !important",
   },
 
   cardContent: {

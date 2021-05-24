@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Spinner from "../layout/Spinner";
+import ProductItem from "./ProductItem";
+import Modal from "@material-ui/core/Modal";
+import ProductModal from "./ProductModal";
 import { getSimilarProducts } from "../../actions/product";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +38,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
   },
 
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   typography: {
     padding: "80px 0",
     textAlign: "center",
+    fontFamily: "Ubuntu Condensed !important",
   },
 
   cardContent: {
@@ -61,6 +71,18 @@ const SimilarProducts = ({
 }) => {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+  const [modalId, setModalId] = React.useState(null);
+
+  const handleOpen = (modalId) => {
+    setModalId(modalId);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     getSimilarProducts(id);
   }, [getSimilarProducts, id]);
@@ -80,37 +102,29 @@ const SimilarProducts = ({
         style={{
           marginBottom: 50,
         }}
-        justify="space-between"
         container
         className={classes.root}
       >
         {similarProducts.map((product, index) => (
-          <Card className={classes.card}>
-            <Link to={`/product/${product.id}`}>
-              <Grid container justify="center">
-                <Grid item>
-                  <CardContent className={classes.cardContent}>
-                    <img
-                      alt={"product_image"}
-                      height="250"
-                      style={{ objectFit: "contains" }}
-                      src={require(`../../assets${product.image}`)}
-                    />
-                    <Typography
-                      variant="h6"
-                      color="textSecondary"
-                      component="p"
-                      style={{ textAlign: "center" }}
-                    >
-                      {product.product_name}
-                    </Typography>
-                  </CardContent>
-                </Grid>
-              </Grid>
-            </Link>
-          </Card>
+          <Grid key={product.id} item xs="auto" sm="auto" md="auto" lg="auto">
+            <ProductItem modalOpen={handleOpen} product={product} />
+          </Grid>
         ))}
       </Grid>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+      >
+        <ProductModal
+          textRem={1.4}
+          fullModalHeight={false}
+          modalClose={handleClose}
+          id={modalId}
+        />
+      </Modal>
     </Fragment>
   );
 };

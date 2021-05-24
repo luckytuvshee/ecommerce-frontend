@@ -138,16 +138,18 @@ const ProductItem = ({
         </div>
       </div>
 
-      <IconButton aria-label="add to favorites" onClick={() => like()}>
-        <FavoriteOutlinedIcon className={liked ? classes.like : null} />
-      </IconButton>
-      <IconButton
-        className={classes.quickView}
-        aria-label="quick see"
-        onClick={() => modalOpen(id)}
-      >
-        <VisibilityIcon />
-      </IconButton>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <IconButton aria-label="add to favorites" onClick={() => like()}>
+          <FavoriteOutlinedIcon className={liked ? classes.like : null} />
+        </IconButton>
+        <IconButton
+          className={classes.quickView}
+          aria-label="quick see"
+          onClick={() => modalOpen(id)}
+        >
+          <VisibilityIcon />
+        </IconButton>
+      </div>
     </div>
   );
 };

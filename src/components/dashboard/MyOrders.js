@@ -44,7 +44,7 @@ const MyOrders = ({ auth, order: { loading, userOrders }, getUserOrders }) => {
             <Typography className={classes.heading}>
               <strong>Захиалгийн дугаар: </strong>
               {order.order_id} <strong> Огноо: </strong>
-              {order.created_at}
+              {new Date(Date.parse(order.created_at)).toLocaleString()}
               <strong> Төлөв: </strong> {order.order_status}
             </Typography>
           </ExpansionPanelSummary>
@@ -65,14 +65,6 @@ const MyOrders = ({ auth, order: { loading, userOrders }, getUserOrders }) => {
                     <Typography>
                       <strong>Бараа: </strong>
                       {product.product_name}
-                    </Typography>
-                    <Typography>
-                      <strong>Өнгө: </strong>
-                      {product.color}
-                    </Typography>
-                    <Typography>
-                      <strong>Хэмжээ: </strong>
-                      {product.size}
                     </Typography>
                     <Typography>
                       <strong>Нэгж үнэ: </strong>

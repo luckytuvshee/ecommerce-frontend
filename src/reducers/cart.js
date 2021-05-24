@@ -12,8 +12,8 @@ import {
   ADD_GUEST_CART_ITEM,
   GET_GUEST_CART_ITEMS,
   IMPORT_CART_ITEM_FROM_COOKIE,
-} from '../actions/types';
-import { toast } from 'react-toastify';
+} from "../actions/types";
+import { toast } from "react-toastify";
 
 const initialState = {
   cartInfo: null,
@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
 
     case DELETE_CART_ITEM:
       const remainingCartProducts = state.cartProducts;
-      delete remainingCartProducts[payload.product_registration_id];
+      delete remainingCartProducts[payload.product_id];
       return {
         ...state,
         cartItems: state.cartItems.filter((item) => item.id !== payload.id),
@@ -63,7 +63,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         guestCartItems: state.guestCartItems.filter(
-          (item) => item.product_registration_id !== payload
+          (item) => item.product_id !== payload
         ),
         cartProducts: newCartProducts,
         loading: false,
@@ -101,9 +101,7 @@ export default function (state = initialState, action) {
         ...state,
         guestCartItems: state.guestCartItems.map((item) => {
           var temp = item;
-          if (
-            item.product_registration_id === payload.product_registration_id
-          ) {
+          if (item.product_id === payload.product_id) {
             temp.quantity = payload.quantity;
           }
           return temp;

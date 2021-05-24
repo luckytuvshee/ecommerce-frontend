@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   typography: {
-    fontFamily: "Nunito, sans-serif !important",
+    fontFamily: "Ubuntu Condensed !important",
     fontWeight: 700,
     padding: "80px 0",
   },

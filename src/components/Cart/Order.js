@@ -359,7 +359,7 @@ const Order = ({
               <Button
                 onClick={() => makeOrder()}
                 variant="contained"
-                color="default"
+                color="primary"
                 size="large"
                 className={classes.button}
               >

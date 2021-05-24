@@ -45,33 +45,7 @@ const CartItem = ({
     <Spinner />
   ) : (
     <Card className={classes.root}>
-      <CardContent>
-        <Grid container alignItems="center">
-          <Grid item>
-            <IconButton>
-              <LocalShipping style={{ width: 50, height: 50 }} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography component="span">
-              Хүргэлт <strong>5000₮</strong>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container alignItems="center">
-          <Grid item>
-            <IconButton>
-              <ShoppingCart style={{ width: 50, height: 50 }} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography component="span">Таны авсан барааны дүн</Typography>
-            <Typography component="span">
-              <strong>50,000₮</strong> өөс их байвал хүргэлт{" "}
-              <strong>үнэгүй</strong>
-            </Typography>
-          </Grid>
-        </Grid>
+      <CardContent style={{ paddingBottom: 15 }}>
         <Paper className={classes.paper}>
           <Grid container alignItems="center" spacing={1}>
             <Grid item>
@@ -94,7 +68,7 @@ const CartItem = ({
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Button
-                style={{ marginTop: 15 }}
+                style={{ marginTop: 15, color: "inherit" }}
                 variant="contained"
                 color="secondary"
                 size="large"
@@ -106,9 +80,9 @@ const CartItem = ({
             </Grid>
             <Grid item>
               <Button
-                style={{ marginTop: 15 }}
+                style={{ marginTop: 15, color: "inherit" }}
                 variant="contained"
-                color="secondary"
+                color="primary"
                 size="large"
                 component={Link}
                 to={{ pathname: "/order", fromLink: true }}
@@ -123,7 +97,7 @@ const CartItem = ({
           <Grid container justify="flex-end" alignItems="center">
             <Grid item>
               <Button
-                style={{ marginTop: 15 }}
+                style={{ marginTop: 15, color: "inherit" }}
                 variant="contained"
                 color="secondary"
                 size="large"

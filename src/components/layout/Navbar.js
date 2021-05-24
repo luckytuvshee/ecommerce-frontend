@@ -45,6 +45,10 @@ import clsx from "clsx";
 import useStyles from "../../styles/NavbarStyle";
 import { toast } from "react-toastify";
 
+// ant
+import { Menu as AntMenu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+
 const Navbar = ({
   auth: { isAuthenticated },
   product: { productTypes, productBrands, loading },
@@ -327,9 +331,8 @@ const Navbar = ({
               <MenuIcon />
             </IconButton>
 
-            <MenuItem component={Link} to="/">
+            <MenuItem className={classes.appName} component={Link} to="/">
               <img
-                className={classes.appName}
                 style={{ width: 50 }}
                 src={require("../../assets/images/leaf.png")}
               />
@@ -411,7 +414,47 @@ const Navbar = ({
           </div>
         </Toolbar>
         <Toolbar className={classes.toolbar}>
-          {productTypes.map((type, index) => (
+          {productTypes.map((type, index) => {
+            const menu = (
+              <AntMenu style={{ top: 10 }}>
+                <AntMenu.Item
+                  key={type.id}
+                  onClick={() => {
+                    setSelectedMenu(index);
+                    history.push(`/products/type/group/${type.id}`);
+                  }}
+                >
+                  <span>{type.name}</span>
+                </AntMenu.Item>
+                <AntMenu.Divider />
+                {type.type.map((subType) => (
+                  <AntMenu.Item
+                    key={subType.id}
+                    onClick={() => {
+                      setSelectedMenu(index);
+                      history.push(`/products/type/${subType.id}`);
+                    }}
+                  >
+                    <span>{subType.type_name}</span>
+                  </AntMenu.Item>
+                ))}
+              </AntMenu>
+            );
+
+            return (
+              // <Dropdown overlay={menu} trigger={["click"]}>
+              <Dropdown overlay={menu}>
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                  style={{ marginRight: 20 }}
+                >
+                  {type.name} <DownOutlined />
+                </a>
+              </Dropdown>
+            );
+          })}
+          {/* {productTypes.map((type, index) => (
             <Button
               key={index}
               aria-haspopup="true"
@@ -457,7 +500,7 @@ const Navbar = ({
                   </ListItem>
                 </StyledMenuItem>
               ))}
-          </Menu>
+          </Menu> */}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

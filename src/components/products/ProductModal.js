@@ -286,8 +286,7 @@ const ProductModal = ({
                 <Divider />
 
                 <Typography className={classes.typography} component="span">
-                  Нөөцөнд байгаа тоо хэмжээ
-                  <Typography>{productsMore[id].quantity}</Typography>
+                  Нөөцөнд байгаа тоо хэмжээ: {productsMore[id].quantity}
                 </Typography>
 
                 <Typography className={classes.typography} component="span">

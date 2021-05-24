@@ -91,7 +91,7 @@ const Payment = ({
       });
     } else {
       const amount = guestCartItems.reduce((a, b) => {
-        return a + b["quantity"] * cartProducts[b["product_i"]].pricde;
+        return a + b["quantity"] * cartProducts[b["product_id"]].pricde;
       }, 0);
 
       setTotalAmount(amount);
@@ -169,6 +169,7 @@ const Payment = ({
           type="submit"
           variant="contained"
           color="secondary"
+          style={{ color: "inherit" }}
           size="large"
           className={classes.button}
           component={Link}
