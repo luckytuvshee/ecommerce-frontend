@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     margin: "0 10px",
     maxWidth: 345,
-    background: "#cfe8fc",
+    background: "#f0f4f8",
     "&:hover": {
       boxShadow: " 6px 6px 7px 2px rgba(255,172,155,1)",
       cursor: "pointer",

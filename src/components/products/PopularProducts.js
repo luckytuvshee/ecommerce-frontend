@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     margin: "0 10px",
     maxWidth: 250,
-    background: "#cfe8fc",
+    background: "#f0f4f8",
     backgroundSize: "contain",
     borderRadius: 0,
   },

@@ -67,3 +67,13 @@ span {
   font-family: "Nunito" !important;
   font-weight: 500 !important;
 }
+
+// Ant Design
+
+ant-dropdown-trigger {
+  border: 2px solid red !important;
+}
+
+ant-select-selector:hover {
+  border-color: 1px solid red !important;
+}

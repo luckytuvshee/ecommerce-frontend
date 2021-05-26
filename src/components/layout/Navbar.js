@@ -97,7 +97,7 @@ const Navbar = ({
           </IconButton>
           <MenuItem component={Link} to="/">
             <img
-              style={{ width: 50, marginLeft: -20 }}
+              style={{ width: 50, marginLeft: 0 }}
               src={require("../../assets/images/leaf.png")}
             />
           </MenuItem>
@@ -236,7 +236,7 @@ const Navbar = ({
   const authLinks = (
     <div>
       <MenuItem component={Link} onClick={handleMenuClose} to="/dashboard">
-        <AccountCircle style={{ marginRight: 10, color: "#FFAC9B" }} />
+        <AccountCircle style={{ marginRight: 10, color: "#bbc9d0" }} />
         Профайл
       </MenuItem>
       <MenuItem
@@ -247,7 +247,7 @@ const Navbar = ({
         }}
         to="/"
       >
-        <MeetingRoomIcon style={{ marginRight: 10, color: "#FFAC9B" }} />
+        <MeetingRoomIcon style={{ marginRight: 10, color: "#bbc9d0" }} />
         Гарах
       </MenuItem>
     </div>

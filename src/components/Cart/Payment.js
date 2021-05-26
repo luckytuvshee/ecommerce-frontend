@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
-    background: "#cfe8fc",
+    background: "#f0f4f8",
     backgroundSize: "contain",
     margin: "auto",
     marginTop: 50,

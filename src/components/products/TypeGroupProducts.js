@@ -153,7 +153,7 @@ const TypeGroupProducts = ({
           container
           spacing={3}
           justify="space-between"
-          style={{ maxWidth: "80%", margin: "auto", marginBottom: 30 }}
+          style={{ maxWidth: "80%", margin: "auto" }}
         >
           <Grid item>
             Эрэмбэлэх:{" "}
@@ -200,17 +200,24 @@ const TypeGroupProducts = ({
               </Grid>
             </Grid>
           </Grid>
+        </Grid>
 
+        <Grid
+          container
+          spacing={3}
+          justify="space-between"
+          style={{ maxWidth: "80%", margin: "auto", marginBottom: 30 }}
+        >
           <Grid item>
             <Button
               type="submit"
               variant="contained"
               color="secondary"
-              size="large"
+              size="medium"
               className={classes.button}
               onClick={filter}
             >
-              Шүүлт хийх
+              Шүүх
             </Button>
           </Grid>
           <Grid item>
@@ -218,11 +225,11 @@ const TypeGroupProducts = ({
               type="submit"
               variant="contained"
               color="primary"
-              size="large"
+              size="medium"
               className={classes.button}
               onClick={clear}
             >
-              Цэвэрлэх
+              Шүүлтүүрийг устгах
             </Button>
           </Grid>
         </Grid>

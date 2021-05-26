@@ -308,7 +308,7 @@ const ProductModal = ({
                   <Button
                     disabled
                     className={classes.count}
-                    style={{ background: "#ffac9b" }}
+                    style={{ background: "#bbc9d0" }}
                   >
                     {count}
                   </Button>

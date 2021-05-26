@@ -53,7 +53,7 @@ const MyOrders = ({ auth, order: { loading, userOrders }, getUserOrders }) => {
               {order.products.map((product) => (
                 <Grid container spacing={3}>
                   <Grid item>
-                    <Link to={`/product/${product.id}`}>
+                    <Link to={`/product/${product.product_id}`}>
                       <img
                         alt={"product"}
                         width="150"

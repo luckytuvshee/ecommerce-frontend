@@ -16,7 +16,7 @@ import Spinner from "../layout/Spinner";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
-    background: "#cfe8fc",
+    background: "#f0f4f8",
     borderRadius: 0,
   },
   paper: {

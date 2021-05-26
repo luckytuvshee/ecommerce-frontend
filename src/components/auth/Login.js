@@ -62,7 +62,7 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <Container maxWidth="sm" className={classes.root}>
-        <Card style={{ backgroundColor: "#cfe8fc" }} variant="outlined">
+        <Card style={{ backgroundColor: "#f0f4f8" }} variant="outlined">
           <CardContent>
             <Typography
               className={classes.typography}

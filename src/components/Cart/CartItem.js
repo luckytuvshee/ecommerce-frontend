@@ -26,7 +26,7 @@ import Spinner from "../layout/Spinner";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
-    background: "#cfe8fc",
+    background: "#f0f4f8",
     marginBottom: 10,
     borderRadius: 0,
   },
@@ -86,7 +86,7 @@ const CartItem = ({
               }}
               style={{ background: "#5C666F", marginBottom: 15 }}
             >
-              <Close style={{ color: "#CFE8FC" }} />
+              <Close style={{ color: "#f0f4f8" }} />
             </IconButton>
           </Grid>
         </Grid>
@@ -136,7 +136,7 @@ const CartItem = ({
                 <Button
                   disabled
                   className={classes.count}
-                  style={{ background: "#ffac9b" }}
+                  style={{ background: "#bbc9d0" }}
                 >
                   {count}
                 </Button>
